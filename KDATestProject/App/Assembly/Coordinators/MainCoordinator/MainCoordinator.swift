@@ -35,6 +35,6 @@ extension MainCoordinator: Coordinator {
 private extension MainCoordinator {
     func performFlow() {
         let view = factory.buildMainScreen()
-        router.setRootModule(view, hideBar: false)
+        router.setRootModule(view, hideBar: true)
     }
 }

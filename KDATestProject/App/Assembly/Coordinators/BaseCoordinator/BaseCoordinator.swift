@@ -9,6 +9,7 @@ import UIKit
 
 class BaseCoordinator {
     var childCoordinators: [Coordinator] = []
+    
     func addDependency(_ coordinator: Coordinator) {
         for element in childCoordinators where element === coordinator {
             return

@@ -22,6 +22,9 @@
 		B96944CF2986E36300692E46 /* ModulesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96944CE2986E36300692E46 /* ModulesFactory.swift */; };
 		B96944D22986E39100692E46 /* MainBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96944D12986E39100692E46 /* MainBuilderProtocol.swift */; };
 		B96944D42986E3AD00692E46 /* MainBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96944D32986E3AD00692E46 /* MainBuilder.swift */; };
+		B96944E42986FEE900692E46 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B96944E32986FEE900692E46 /* SnapKit */; };
+		B96944E82986FF2A00692E46 /* MainHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96944E72986FF2A00692E46 /* MainHeaderView.swift */; };
+		B96944EA2987153300692E46 /* MainSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96944E92987153300692E46 /* MainSearchBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,8 @@
 		B96944CE2986E36300692E46 /* ModulesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModulesFactory.swift; sourceTree = "<group>"; };
 		B96944D12986E39100692E46 /* MainBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBuilderProtocol.swift; sourceTree = "<group>"; };
 		B96944D32986E3AD00692E46 /* MainBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBuilder.swift; sourceTree = "<group>"; };
+		B96944E72986FF2A00692E46 /* MainHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderView.swift; sourceTree = "<group>"; };
+		B96944E92987153300692E46 /* MainSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSearchBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B96944E42986FEE900692E46 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,8 +124,8 @@
 		B96944B62986E20600692E46 /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				B96944E62986FF1700692E46 /* MainScreen */,
 				B96944A92986E17A00692E46 /* LaunchScreen.storyboard */,
-				B96944A22986E17900692E46 /* MainViewController.swift */,
 			);
 			path = Flows;
 			sourceTree = "<group>";
@@ -222,6 +228,16 @@
 			path = AppDelegate;
 			sourceTree = "<group>";
 		};
+		B96944E62986FF1700692E46 /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B96944A22986E17900692E46 /* MainViewController.swift */,
+				B96944E72986FF2A00692E46 /* MainHeaderView.swift */,
+				B96944E92987153300692E46 /* MainSearchBar.swift */,
+			);
+			path = MainScreen;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -232,12 +248,16 @@
 				B96944972986E17900692E46 /* Sources */,
 				B96944982986E17900692E46 /* Frameworks */,
 				B96944992986E17900692E46 /* Resources */,
+				B96944EB29871CE400692E46 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = KDATestProject;
+			packageProductDependencies = (
+				B96944E32986FEE900692E46 /* SnapKit */,
+			);
 			productName = KDATestProject;
 			productReference = B969449B2986E17900692E46 /* KDATestProject.app */;
 			productType = "com.apple.product-type.application";
@@ -266,6 +286,9 @@
 				Base,
 			);
 			mainGroup = B96944922986E17900692E46;
+			packageReferences = (
+				B96944E22986FEE900692E46 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = B969449C2986E17900692E46 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -287,6 +310,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B96944EB29871CE400692E46 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B96944972986E17900692E46 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -294,6 +337,7 @@
 			files = (
 				B96944C82986E30400692E46 /* Coordinator.swift in Sources */,
 				B96944CF2986E36300692E46 /* ModulesFactory.swift in Sources */,
+				B96944E82986FF2A00692E46 /* MainHeaderView.swift in Sources */,
 				B96944D22986E39100692E46 /* MainBuilderProtocol.swift in Sources */,
 				B96944CA2986E31700692E46 /* BaseCoordinator.swift in Sources */,
 				B96944CC2986E33B00692E46 /* AppCoordinator.swift in Sources */,
@@ -305,6 +349,7 @@
 				B96944BC2986E23200692E46 /* Router.swift in Sources */,
 				B96944A12986E17900692E46 /* SceneDelegate.swift in Sources */,
 				B96944BA2986E22A00692E46 /* Routable.swift in Sources */,
+				B96944EA2987153300692E46 /* MainSearchBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +561,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B96944E22986FEE900692E46 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B96944E32986FEE900692E46 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B96944E22986FEE900692E46 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B96944932986E17900692E46 /* Project object */;
 }

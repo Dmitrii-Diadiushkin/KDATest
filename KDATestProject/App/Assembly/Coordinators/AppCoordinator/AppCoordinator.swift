@@ -11,6 +11,7 @@ final class AppCoordinator: BaseCoordinator {
     let window: UIWindow?
     fileprivate let factory: CoordinatorFactoryProtocol
     fileprivate let router: Routable
+    
     init(
         router: Routable,
         factory: CoordinatorFactoryProtocol,
@@ -20,6 +21,7 @@ final class AppCoordinator: BaseCoordinator {
         self.factory = factory
         self.window = window
         super.init()
+        
         windowSettings()
     }
     class func build(
