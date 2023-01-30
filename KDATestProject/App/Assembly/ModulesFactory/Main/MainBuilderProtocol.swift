@@ -10,4 +10,7 @@ import UIKit
 protocol MainBuilderProtocol {
     func buildMainScreen(with viewModel: MainScreenViewModelProtocol) -> MainViewController
     func buildMainViewModel() -> MainScreenViewModelProtocol
+    
+    func buildVideoScreen(with viewModel: VideoCreatorViewModelProtocol) -> VideoCreatorScreenViewController
+    func buildVideoViewModel(_ data: ImagesForVideo) -> VideoCreatorViewModelProtocol
 }

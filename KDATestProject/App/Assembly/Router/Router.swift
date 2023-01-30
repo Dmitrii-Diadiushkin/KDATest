@@ -25,4 +25,8 @@ extension Router: Routable {
     func push(_ module: UIViewController, animated: Bool) {
         rootController?.pushViewController(module, animated: animated)
     }
+    
+    func popModule(animated: Bool) {
+        rootController?.popViewController(animated: animated)
+    }
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum NetworkError: Error {
     case somethingWrong
@@ -116,6 +117,27 @@ final class NetworkHandler: NetworkHandlerProtocol {
                 } catch {
                     completion?(.failure(.somethingWrong))
                 }
+            } else {
+                completion?(.failure(.somethingWrong))
+                return
+            }
+        }
+        task.resume()
+    }
+    
+    func downloadImage(url: URL, completion: ((Result<UIImage, NetworkError>) -> Void)?) {
+        let cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData
+        let urlRequest = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: 0)
+        let task = session.dataTask(with: urlRequest) { data, response, error in
+            if error != nil {
+                completion?(.failure(.somethingWrong))
+                return
+            }
+            if let recievedData = data,
+               let httpResponse = response as? HTTPURLResponse,
+               let recievedImage = UIImage(data: recievedData),
+               httpResponse.statusCode == 200 {
+                completion?(.success(recievedImage))
             } else {
                 completion?(.failure(.somethingWrong))
                 return

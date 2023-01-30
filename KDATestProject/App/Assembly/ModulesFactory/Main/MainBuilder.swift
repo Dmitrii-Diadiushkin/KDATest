@@ -15,4 +15,11 @@ extension ModulesFactory: MainBuilderProtocol {
     func buildMainViewModel() -> MainScreenViewModelProtocol {
         return MainScreenViewModel()
     }
+    
+    func buildVideoScreen(with viewModel: VideoCreatorViewModelProtocol) -> VideoCreatorScreenViewController {
+        return VideoCreatorScreenViewController(viewModel: viewModel)
+    }
+    func buildVideoViewModel(_ data: ImagesForVideo) -> VideoCreatorViewModelProtocol {
+        return VideoCreatorViewModel(data)
+    }
 }

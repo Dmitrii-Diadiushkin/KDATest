@@ -35,7 +35,21 @@ extension MainCoordinator: Coordinator {
 private extension MainCoordinator {
     func performFlow() {
         let viewModel = factory.buildMainViewModel()
+        viewModel.onNextScreen = { [weak self] data in
+            guard let self = self else { return }
+            self.runVideoCreatorScreen(data)
+        }
         let view = factory.buildMainScreen(with: viewModel)
         router.setRootModule(view, hideBar: true)
+    }
+    
+    func runVideoCreatorScreen(_ imagesData: ImagesForVideo) {
+        let viewModel = factory.buildVideoViewModel(imagesData)
+        viewModel.onPreviousScreen = { [weak self] in
+            guard let self = self else { return }
+            self.router.popModule(animated: true)
+        }
+        let view = factory.buildVideoScreen(with: viewModel)
+        router.push(view, animated: true)
     }
 }
