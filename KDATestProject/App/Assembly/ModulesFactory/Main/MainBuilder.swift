@@ -8,7 +8,11 @@
 import Foundation
 
 extension ModulesFactory: MainBuilderProtocol {
-    func buildMainScreen() -> MainViewController {
-        return MainViewController()
+    func buildMainScreen(with viewModel: MainScreenViewModelProtocol) -> MainViewController {
+        return MainViewController(viewModel: viewModel)
+    }
+    
+    func buildMainViewModel() -> MainScreenViewModelProtocol {
+        return MainScreenViewModel()
     }
 }

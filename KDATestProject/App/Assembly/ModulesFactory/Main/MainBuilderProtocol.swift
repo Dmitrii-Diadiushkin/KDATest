@@ -8,5 +8,6 @@
 import UIKit
 
 protocol MainBuilderProtocol {
-    func buildMainScreen() -> MainViewController
+    func buildMainScreen(with viewModel: MainScreenViewModelProtocol) -> MainViewController
+    func buildMainViewModel() -> MainScreenViewModelProtocol
 }

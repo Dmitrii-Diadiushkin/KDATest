@@ -10,6 +10,7 @@ import UIKit
 
 protocol MainHeaderViewDelegate: AnyObject {
     func pressSearchButton(with string: String)
+    func handleSearchStartStop(searchIsActive: Bool)
 }
 
 final class MainHeaderView: UIView {
@@ -31,7 +32,6 @@ final class MainHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupView()
     }
     
@@ -42,7 +42,7 @@ final class MainHeaderView: UIView {
     @objc func handleTap() {
         searchBar.changePlaceholderAlignment(center: true)
         searchBar.text = nil
-        endEditing(true)
+        stopSearch()
     }
     
     private func setupView() {
@@ -66,11 +66,17 @@ final class MainHeaderView: UIView {
             make.bottom.equalTo(searchBar.snp.top).inset(-16.0)
         }
     }
+    
+    private func stopSearch() {
+        delegate?.handleSearchStartStop(searchIsActive: true)
+        endEditing(true)
+    }
 }
 
 extension MainHeaderView: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         searchBar.changePlaceholderAlignment(center: false)
+        delegate?.handleSearchStartStop(searchIsActive: false)
         return true
     }
     
@@ -83,10 +89,11 @@ extension MainHeaderView: UITextFieldDelegate {
             string == "\n" {
             if text == "" {
                 searchBar.changePlaceholderAlignment(center: true)
+                delegate?.pressSearchButton(with: text)
             } else {
                 delegate?.pressSearchButton(with: text)
             }
-            endEditing(true)
+            stopSearch()
         }
         return true
     }
