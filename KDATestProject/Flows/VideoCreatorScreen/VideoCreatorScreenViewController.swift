@@ -24,6 +24,60 @@ final class VideoCreatorScreenViewController: UIViewController {
         return view
     }()
     
+    private let blurView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black.withAlphaComponent(0.3)
+        view.isHidden = true
+        return view
+    }()
+    
+    private let progressAlert: UIAlertController = {
+        let view = UIAlertController(
+            title: "Video prossecing",
+            message: "Wait a little bit",
+            preferredStyle: .alert
+        )
+        let indicator = UIActivityIndicatorView(style: .large)
+        view.view.addSubview(indicator)
+        indicator.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(view.view.snp.bottom).inset(33.37)
+            make.height.width.equalTo(41.25)
+        }
+        view.view.snp.makeConstraints { make in
+            make.height.equalTo(180.0)
+        }
+        indicator.isUserInteractionEnabled = false
+        indicator.startAnimating()
+        return view
+    }()
+    
+    private let successAlert: UIAlertController = {
+        let view = UIAlertController(
+            title: "It's done",
+            message: "Video successfully saved to your gallery",
+            preferredStyle: .alert
+        )
+        return view
+    }()
+    
+    private let failureAlert: UIAlertController = {
+        let attributedString = NSAttributedString(
+            string: "Error",
+            attributes: [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17.0, weight: .medium),
+                NSAttributedString.Key.foregroundColor: UIColor.red
+            ]
+        )
+        let view = UIAlertController(
+            title: "",
+            message: "Failed to save video ",
+            preferredStyle: .alert
+        )
+        view.setValue(attributedString, forKey: "attributedTitle")
+        return view
+    }()
+    
     private var dataSource: UICollectionViewDiffableDataSource<Int, EffectTypeModelToShow>! = nil
     
     private var bag = Set<AnyCancellable>()
@@ -71,11 +125,14 @@ private extension VideoCreatorScreenViewController {
                 guard let self = self else { return }
                 switch state {
                 case .inProgress:
-                    print("Creation in progress")
+                    self.blurView.isHidden = false
+                    self.present(self.progressAlert, animated: false)
                 case .success:
-                    print("Creation success")
+                    self.progressAlert.dismiss(animated: false)
+                    self.present(self.successAlert, animated: false)
                 case .failure:
-                    print("Creation failure")
+                    self.progressAlert.dismiss(animated: false)
+                    self.present(self.failureAlert, animated: false)
                 }
             }
             .store(in: &bag)
@@ -86,6 +143,8 @@ private extension VideoCreatorScreenViewController {
         setupHeaderView()
         setupNextButton()
         setupCollectionView()
+        setupBlurView()
+        setupAlerts()
     }
     
     func setupHeaderView() {
@@ -113,6 +172,26 @@ private extension VideoCreatorScreenViewController {
             make.height.equalTo(52.0)
         }
         nextButton.addTarget(self, action: #selector(handleNextButtonTap), for: .touchUpInside)
+    }
+    
+    func setupBlurView() {
+        view.addSubview(blurView)
+        blurView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    func setupAlerts() {
+        successAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            self.closeBlurView()
+        }))
+        failureAlert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            self.closeBlurView()
+        }))
+    }
+    
+    func closeBlurView() {
+        blurView.isHidden = true
     }
     
     @objc func handleNextButtonTap() {

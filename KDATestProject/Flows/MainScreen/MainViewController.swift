@@ -15,7 +15,6 @@ final class MainViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Int, PhotosModelToShow>! = nil
     private var tapGesture: UITapGestureRecognizer
     
-    
     private var selectedCounter: Int = 0 {
         didSet {
             if selectedCounter == 2 {
@@ -58,8 +57,8 @@ final class MainViewController: UIViewController {
             action: #selector(headerView.handleTap)
         )
         super.init(nibName: nil, bundle: nil)
-        
         layout.delegate = self
+        configureDataSource()
         setupViews()
         binding()
     }
@@ -76,21 +75,31 @@ final class MainViewController: UIViewController {
 
 private extension MainViewController {
     func setupViews() {
-        configureDataSource()
-        collectionView.delegate = self
-        collectionView.allowsMultipleSelection = true
         view.backgroundColor = .white
-        
+        setupHeaderView()
+        setupCollectionView()
+        setupNextButton()
+    }
+    
+    func setupHeaderView() {
         view.addSubview(headerView)
         headerView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
         }
         headerView.delegate = self
+    }
+    
+    func setupCollectionView() {
+        collectionView.delegate = self
+        collectionView.allowsMultipleSelection = true
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview().inset(16.0)
             make.top.equalTo(headerView.snp.bottom).offset(24.0)
         }
+    }
+    
+    func setupNextButton() {
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(16.0)

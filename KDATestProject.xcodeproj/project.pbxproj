@@ -330,11 +330,9 @@
 		B969451829884D6D00692E46 /* VideoCreatorScreen */ = {
 			isa = PBXGroup;
 			children = (
+				B96945392988F8B900692E46 /* Views */,
 				B969451929884D8900692E46 /* VideoCreatorScreenViewController.swift */,
 				B969451B29884DA500692E46 /* VideoCreatorViewModel.swift */,
-				B969451D29884FF900692E46 /* VideoCreatorScreenHeaderView.swift */,
-				B969452829885A7D00692E46 /* VideoCreatorScreenEffectCell.swift */,
-				B969452A29885FD700692E46 /* LayoutFactory.swift */,
 			);
 			path = VideoCreatorScreen;
 			sourceTree = "<group>";
@@ -355,6 +353,16 @@
 				B96945352988DCD700692E46 /* VideoCreatorProtocol.swift */,
 			);
 			path = VideoCreator;
+			sourceTree = "<group>";
+		};
+		B96945392988F8B900692E46 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B969452829885A7D00692E46 /* VideoCreatorScreenEffectCell.swift */,
+				B969451D29884FF900692E46 /* VideoCreatorScreenHeaderView.swift */,
+				B969452A29885FD700692E46 /* LayoutFactory.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
