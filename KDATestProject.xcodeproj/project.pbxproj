@@ -45,8 +45,6 @@
 		B969452929885A7D00692E46 /* VideoCreatorScreenEffectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B969452829885A7D00692E46 /* VideoCreatorScreenEffectCell.swift */; };
 		B969452B29885FD700692E46 /* LayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B969452A29885FD700692E46 /* LayoutFactory.swift */; };
 		B969452E29886A9000692E46 /* VideoCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B969452D29886A9000692E46 /* VideoCreator.swift */; };
-		B969453129886DCD00692E46 /* 16_9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B969452F29886DCD00692E46 /* 16_9.jpg */; };
-		B969453229886DCD00692E46 /* 1_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B969453029886DCD00692E46 /* 1_1.jpg */; };
 		B96945362988DCD700692E46 /* VideoCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96945352988DCD700692E46 /* VideoCreatorProtocol.swift */; };
 		B96945382988DD2000692E46 /* CreationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96945372988DD2000692E46 /* CreationState.swift */; };
 /* End PBXBuildFile section */
@@ -90,8 +88,6 @@
 		B969452829885A7D00692E46 /* VideoCreatorScreenEffectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCreatorScreenEffectCell.swift; sourceTree = "<group>"; };
 		B969452A29885FD700692E46 /* LayoutFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutFactory.swift; sourceTree = "<group>"; };
 		B969452D29886A9000692E46 /* VideoCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCreator.swift; sourceTree = "<group>"; };
-		B969452F29886DCD00692E46 /* 16_9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 16_9.jpg; sourceTree = "<group>"; };
-		B969453029886DCD00692E46 /* 1_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1_1.jpg; sourceTree = "<group>"; };
 		B96945352988DCD700692E46 /* VideoCreatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCreatorProtocol.swift; sourceTree = "<group>"; };
 		B96945372988DD2000692E46 /* CreationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -164,8 +160,6 @@
 		B96944B42986E1F200692E46 /* Resourses */ = {
 			isa = PBXGroup;
 			children = (
-				B969453029886DCD00692E46 /* 1_1.jpg */,
-				B969452F29886DCD00692E46 /* 16_9.jpg */,
 				B96944A72986E17A00692E46 /* Assets.xcassets */,
 			);
 			path = Resourses;
@@ -434,8 +428,6 @@
 			files = (
 				B96944AB2986E17A00692E46 /* LaunchScreen.storyboard in Resources */,
 				B96944A82986E17A00692E46 /* Assets.xcassets in Resources */,
-				B969453129886DCD00692E46 /* 16_9.jpg in Resources */,
-				B969453229886DCD00692E46 /* 1_1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
