@@ -10,6 +10,7 @@ import Foundation
 
 protocol VideoCreatorViewModelProtocol: AnyObject {
     var effectDataPublisher: AnyPublisher<[EffectTypeModelToShow], Never> { get }
+    var creatorStateDataPublisher: AnyPublisher<CreationState, Never> { get }
     var onPreviousScreen: CompletionBlock? { get set }
     
     func loadData()
@@ -18,13 +19,18 @@ protocol VideoCreatorViewModelProtocol: AnyObject {
 
 final class VideoCreatorViewModel: VideoCreatorViewModelProtocol {
     private let effectBuilder: EffectBuilder
-    private let creator: VideoCreator
+    private let creator: VideoCreatorProtocol
     
     var effectDataPublisher: AnyPublisher<[EffectTypeModelToShow], Never> {
         return effectDataUpdater.eraseToAnyPublisher()
     }
     
+    var creatorStateDataPublisher: AnyPublisher<CreationState, Never> {
+        return creatorStateDataUpdater.eraseToAnyPublisher()
+    }
+    
     private let effectDataUpdater = CurrentValueSubject<[EffectTypeModelToShow], Never>([])
+    private let creatorStateDataUpdater = PassthroughSubject<CreationState, Never>()
     
     var onPreviousScreen: CompletionBlock?
     
@@ -39,10 +45,12 @@ final class VideoCreatorViewModel: VideoCreatorViewModelProtocol {
     }
     
     func tapNextButton(with effectId: Int) {
+        creatorStateDataUpdater.send(.inProgress)
         let effectType = effectDataUpdater.value[effectId].effectType
         DispatchQueue.global().async { [weak self] in
-            self?.creator.startVideoCreation(with: effectType, completion: { result in
-                print(result)
+            self?.creator.startVideoCreation(with: effectType, completion: { [weak self] result in
+                let state: CreationState = result ? .success : .failure
+                self?.creatorStateDataUpdater.send(state)
             })
         }
     }

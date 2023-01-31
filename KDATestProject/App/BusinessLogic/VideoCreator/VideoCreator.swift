@@ -9,12 +9,13 @@ import AVFoundation
 import CoreImage.CIFilterBuiltins
 import PhotosUI
 import UIKit
-
-final class VideoCreator {
+// swiftlint: disable all
+final class VideoCreator: VideoCreatorProtocol {
     private let imageUrls: ImagesForVideo
     private let dataManager: NetworkHandlerProtocol
     private var startImage: CIImage?
     private var finishImage: CIImage?
+    private var frameSize: CGSize = CGSize(width: 960, height: 540)
     private var filter: CITransitionFilter?
     
     init(_ data: ImagesForVideo) {
@@ -48,7 +49,7 @@ private extension VideoCreator {
         dataManager.downloadImage(url: imageUrls.sourceImage) { [weak self] result in
             switch result {
             case .success(let image):
-                self?.startImage = CIImage(image: image)
+                self?.startImage = self?.scaleImage(image)
             case .failure:
                 break
             }
@@ -59,7 +60,7 @@ private extension VideoCreator {
         dataManager.downloadImage(url: imageUrls.targetImage) { [weak self] result in
             switch result {
             case .success(let image):
-                self?.finishImage = CIImage(image: image)
+                self?.finishImage = self?.scaleImage(image)
             case .failure:
                 break
             }
@@ -67,8 +68,49 @@ private extension VideoCreator {
         }
         
         gcdGroup.notify(queue: DispatchQueue.global()) {
+            if let stImage = self.startImage,
+               stImage.extent.height > stImage.extent.width {
+                self.frameSize = CGSize(width: 560, height: 940)
+            }
             completion(true)
         }
+    }
+    
+    func scaleImage(_ image: UIImage) -> CIImage? {
+        guard let ciImage = CIImage(image: image) else { return nil }
+        let scaleRatio: CGFloat
+        let aspectRatio: CGFloat
+        if ciImage.extent.height > ciImage.extent.width {
+            scaleRatio = 940 / (ciImage.extent.height)
+            aspectRatio = 560 / 940
+        } else {
+            scaleRatio = 540 / (ciImage.extent.width)
+            aspectRatio = 960 / 540
+        }
+        let scaleFilter = CIFilter.lanczosScaleTransform()
+        scaleFilter.inputImage = ciImage
+        scaleFilter.scale = Float(scaleRatio)
+        scaleFilter.aspectRatio = Float(aspectRatio)
+        return scaleFilter.outputImage
+    }
+    
+    func scaleImage(_ image: CIImage) -> CIImage? {
+        let targetSize: CGSize
+        
+        if image.extent.height > image.extent.width {
+            targetSize = CGSize(width: 560, height: 940)
+        } else {
+            targetSize = CGSize(width: 960, height: 540)
+        }
+
+        let scale = targetSize.height / (image.extent.height)
+        let aspectRatio = targetSize.width/((image.extent.width) * scale)
+        
+        let scaleFilter = CIFilter.lanczosScaleTransform()
+        scaleFilter.inputImage = image
+        scaleFilter.scale = Float(scale)
+        scaleFilter.aspectRatio = Float(aspectRatio)
+        return scaleFilter.outputImage
     }
     
     func createVideo(completion: @escaping ((Bool) -> Void)) {
@@ -80,8 +122,8 @@ private extension VideoCreator {
         
         CVPixelBufferCreate(
             kCFAllocatorDefault,
-            960,
-            540,
+            Int(frameSize.width),
+            Int(frameSize.height),
             kCVPixelFormatType_32BGRA,
             attributes,
             &pixelBuffer
@@ -116,12 +158,14 @@ private extension VideoCreator {
             print("Could not remove file \(error.localizedDescription)")
         }
         
-        guard let assetWriter = try? AVAssetWriter(outputURL: outputMovieURL, fileType: .mov) else {
+        guard let assetWriter = try? AVAssetWriter(outputURL: outputMovieURL, fileType: .mov),
+              var settingsAssistant = AVOutputSettingsAssistant(preset: .preset960x540)?.videoSettings else {
             completion(false)
             return
         }
-        
-        let settingsAssistant = AVOutputSettingsAssistant(preset: .preset960x540)?.videoSettings
+        settingsAssistant["AVVideoHeightKey"] = frameSize.height
+        settingsAssistant["AVVideoWidthKey"] = frameSize.width
+        settingsAssistant["AVVideoScalingModeKey"] = AVVideoScalingModeResizeAspectFill
         let assetWriterInput = AVAssetWriterInput(mediaType: .video, outputSettings: settingsAssistant)
         let assetWriterAdaptor = AVAssetWriterInputPixelBufferAdaptor(
             assetWriterInput: assetWriterInput,
@@ -141,7 +185,8 @@ private extension VideoCreator {
                 let frameTime = CMTimeMake(value: Int64(frameCount), timescale: Int32(framesPerSecond))
                 let filterTime = Float(frameCount) / Float(totalFrames)
                 applyingFilter.time = filterTime
-                if let filteredImage = applyingFilter.outputImage {
+                if let outputImage = applyingFilter.outputImage,
+                   let filteredImage = scaleImage(outputImage) {
                     context.render(filteredImage, to: unwrappedPixelBuffer)
                 }
                 assetWriterAdaptor.append(unwrappedPixelBuffer, withPresentationTime: frameTime)

@@ -47,6 +47,8 @@
 		B969452E29886A9000692E46 /* VideoCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B969452D29886A9000692E46 /* VideoCreator.swift */; };
 		B969453129886DCD00692E46 /* 16_9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B969452F29886DCD00692E46 /* 16_9.jpg */; };
 		B969453229886DCD00692E46 /* 1_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B969453029886DCD00692E46 /* 1_1.jpg */; };
+		B96945362988DCD700692E46 /* VideoCreatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96945352988DCD700692E46 /* VideoCreatorProtocol.swift */; };
+		B96945382988DD2000692E46 /* CreationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96945372988DD2000692E46 /* CreationState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +92,8 @@
 		B969452D29886A9000692E46 /* VideoCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCreator.swift; sourceTree = "<group>"; };
 		B969452F29886DCD00692E46 /* 16_9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 16_9.jpg; sourceTree = "<group>"; };
 		B969453029886DCD00692E46 /* 1_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1_1.jpg; sourceTree = "<group>"; };
+		B96945352988DCD700692E46 /* VideoCreatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCreatorProtocol.swift; sourceTree = "<group>"; };
+		B96945372988DD2000692E46 /* CreationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreationState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +156,7 @@
 				B969451629884CEF00692E46 /* ImagesForVideo.swift */,
 				B969451F2988558900692E46 /* EffectType.swift */,
 				B96945212988561B00692E46 /* EffectTypeModelToShow.swift */,
+				B96945372988DD2000692E46 /* CreationState.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -347,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				B969452D29886A9000692E46 /* VideoCreator.swift */,
+				B96945352988DCD700692E46 /* VideoCreatorProtocol.swift */,
 			);
 			path = VideoCreator;
 			sourceTree = "<group>";
@@ -452,6 +458,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B96945382988DD2000692E46 /* CreationState.swift in Sources */,
+				B96945362988DCD700692E46 /* VideoCreatorProtocol.swift in Sources */,
 				B96944C82986E30400692E46 /* Coordinator.swift in Sources */,
 				B96944CF2986E36300692E46 /* ModulesFactory.swift in Sources */,
 				B96944E82986FF2A00692E46 /* MainHeaderView.swift in Sources */,

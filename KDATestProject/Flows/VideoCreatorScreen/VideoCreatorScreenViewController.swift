@@ -64,6 +64,21 @@ private extension VideoCreatorScreenViewController {
                 self.loadData(with: recievedData)
             }
             .store(in: &bag)
+        
+        viewModel.creatorStateDataPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                switch state {
+                case .inProgress:
+                    print("Creation in progress")
+                case .success:
+                    print("Creation success")
+                case .failure:
+                    print("Creation failure")
+                }
+            }
+            .store(in: &bag)
     }
     
     func setupViews() {
